@@ -48,6 +48,20 @@ app.delete('/posts/:id', async (req, res) => {
   }
 });
 
+// PUT /posts/:id
+app.put('/posts/:id', async (req, res) => {
+  try {
+    const updatedPost = await Post.findByIdAndUpdate(
+      req.params.id,
+      { title: req.body.title, body: req.body.body },
+      { new: true } // return updated post
+    );
+    res.json(updatedPost);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
 
 app.get('/', (req, res) => {
   res.send('Hello from EC2 and MongoDB!');
